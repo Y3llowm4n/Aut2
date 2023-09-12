@@ -26,6 +26,25 @@ admin_ssh_key {
     version   = "latest"
   }
 
+   boot_diagnostics {
+    storage_account_uri = azurerm_storage_account.st_ass_lin_001.primary_blob_endpoint
+  }
+
   depends_on = [ tls_private_key.linux_key ]
 
+}
+
+resource "azurerm_virtual_machine_extension" "vm_ext_bash" {
+  name                 = "vme-bash"
+  virtual_machine_id   = azurerm_linux_virtual_machine.lin_web_vm1.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  settings = <<SETTINGS
+  {
+    "fileUris": ["https://stasslin01.blob.core.windows.net/stcasslin01/website.sh"], 
+    "commandToExecute": "bash website.sh" 
+  }
+    SETTINGS
 }
