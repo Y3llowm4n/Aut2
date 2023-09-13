@@ -6,6 +6,8 @@
 *.tfstate.*
 *.tfvars
 *.tfvars.*
+*ssh.tf
+*ssh.tf*
 
 
 # Crash log files
