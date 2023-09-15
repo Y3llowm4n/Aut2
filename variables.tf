@@ -27,3 +27,8 @@ variable "storage_container_name" {
   type = string
   description = "Name for storage container"
 }
+
+variable "count_vm" {
+  type = number
+  description = "Number of vm's created"
+}
