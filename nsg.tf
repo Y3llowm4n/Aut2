@@ -31,6 +31,7 @@ resource "azurerm_network_security_group" "nsg_lin_web_1" {
 
 # Connect the security group to the network interface
 resource "azurerm_network_interface_security_group_association" "example" {
-  network_interface_id      = azurerm_network_interface.lin_web_nic1.id
+  count = var.count_vm
+  network_interface_id      = azurerm_network_interface.lin_web_nic1[count.index].id
   network_security_group_id = azurerm_network_security_group.nsg_lin_web_1.id
 }

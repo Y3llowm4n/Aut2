@@ -7,7 +7,7 @@ resource "azurerm_linux_virtual_machine" "lin_web_vm" {
   computer_name       = "${var.computer_name}-${count.index}"
   admin_username      = var.admin_username
   admin_password      = var.admin_password
-  network_interface_ids = [azurerm_network_interface.lin_web_nic1.id]
+  network_interface_ids = [azurerm_network_interface.lin_web_nic1[count.index].id]
 
 admin_ssh_key {
     username   = var.admin_username

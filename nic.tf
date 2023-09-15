@@ -1,5 +1,6 @@
 resource "azurerm_network_interface" "lin_web_nic1" {
-  name                = "nic_lin_web"
+  count = var.count_vm
+  name                = "nic_lin_web-${count.index}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
