@@ -1,13 +1,12 @@
 resource "azurerm_linux_virtual_machine" "lin_web_vm" {
-  count = var.count_vm
-  name                = "linuxwebvm-${count.index}"
+  name                = "linuxwebvm"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = "Standard_B1ls"
-  computer_name       = "${var.computer_name}-${count.index}"
+  computer_name       = var.computer_name
   admin_username      = var.admin_username
   admin_password      = var.admin_password
-  network_interface_ids = [azurerm_network_interface.lin_web_nic1[count.index].id]
+  network_interface_ids = [azurerm_network_interface.lin_web_nic1.id]
 
 admin_ssh_key {
     username   = var.admin_username
@@ -15,7 +14,7 @@ admin_ssh_key {
   }
 
   os_disk {
-    name                 = "myOsDisk-${count.index}"
+    name                 = "myOsDisk"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
@@ -36,9 +35,8 @@ admin_ssh_key {
 }
 
 resource "azurerm_virtual_machine_extension" "vm_ext_bash" {
-  count = var.count_vm
-  name                 = "vme-bash-${count.index}"
-  virtual_machine_id   = azurerm_linux_virtual_machine.lin_web_vm[count.index].id
+  name                 = "vme-bash"
+  virtual_machine_id   = azurerm_linux_virtual_machine.lin_web_vm.id
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
   type_handler_version = "2.0"
